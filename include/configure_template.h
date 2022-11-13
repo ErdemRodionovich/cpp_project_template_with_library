@@ -1,6 +1,6 @@
 #pragma once
 
-#cmakedefine USE_MYMATH;
+#cmakedefine USE_MYMATH
 
 namespace ertb{
 constexpr int VERSION_MAJOR = ${${PROJECT_NAME}_VERSION_MAJOR};
