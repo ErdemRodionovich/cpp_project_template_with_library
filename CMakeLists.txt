@@ -19,6 +19,9 @@ set(
 )
 configure_file(include/configure_template.h configure.h)
 set(
+    HEADERS
+)
+set(
     SOURCES
     src/main.cpp
 )
@@ -38,3 +41,9 @@ target_include_directories(${TARGET_NAME} PRIVATE
                                           include
                                           ${CMAKE_CURRENT_BINARY_DIR}
 )
+
+list(APPEND INSTALLABLE_TARGETS ${TARGET_NAME})
+install(TARGETS ${INSTALLABLE_TARGETS} DESTINATION bin)
+install(FILES ${HEADERS} DESTINATION include)
+
+add_subdirectory(test)

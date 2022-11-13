@@ -3,6 +3,10 @@ set(
 	MathFunctions
 )
 set(
+    HEADERS
+    include/MathFunctions.h
+)
+set(
 	SOURCES
 	src/mysqrt.cpp
 )
@@ -15,3 +19,7 @@ target_include_directories(${TARGET_NAME}
 	INTERFACE
 		include
 )
+
+set(INSTALLABLE_LIBS MathFunctions)
+install(TARGETS ${INSTALLABLE_LIBS} DESTINATION lib)
+install(FILES ${HEADERS} DESTINATION include)
