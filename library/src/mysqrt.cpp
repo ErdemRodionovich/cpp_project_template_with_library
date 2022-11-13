@@ -4,6 +4,8 @@
 #include <cmath>
 #endif
 
+#include "Table.h"
+
 // a hack square root calculation using simple operations
 double mysqrt(double x)
 {
@@ -12,6 +14,12 @@ double mysqrt(double x)
   }
 
   double result = x;
+
+  if(x >= 1 && x < 10){
+       std::cout<<"Use table to calculate sqrt "<<std::endl;
+       result = sqrtTable[static_cast<int>(x)];
+       return result;
+  }
 
   // do ten iterations
 #if defined(HAVE_LOG) && defined(HAVE_EXP)
