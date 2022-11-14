@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 
+set(CMAKE_DEBUG_POSTFIX debug)
+
 #compiler flags
 add_library(compiler_flags INTERFACE)
 target_compile_features(compiler_flags INTERFACE cxx_std_20)
@@ -28,6 +30,11 @@ set(
 )
 
 add_executable(${TARGET_NAME} ${SOURCES})
+set_target_properties(
+    ${TARGET_NAME}
+    PROPERTIES
+        DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX}
+)
 
 if(USE_MYMATH)
   add_subdirectory(library)

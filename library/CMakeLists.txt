@@ -36,6 +36,9 @@ set(
 
 add_library(${TARGET_NAME} SHARED ${SOURCES})
 
+set_property(TARGET ${TARGET_NAME} PROPERTY VERSION "1.0.0")
+set_property(TARGET ${TARGET_NAME} PROPERTY SOVERSION "1")
+
 target_link_libraries(${TARGET_NAME} compiler_flags)
 
 target_include_directories(${TARGET_NAME}
