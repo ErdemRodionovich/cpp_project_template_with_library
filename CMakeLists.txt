@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-set(CMAKE_DEBUG_POSTFIX debug)
+set(CMAKE_DEBUG_POSTFIX _debug)
 
 #compiler flags
 add_library(compiler_flags INTERFACE)
@@ -12,13 +12,13 @@ target_compile_options(compiler_flags INTERFACE
   "$<${msvc_cxx}:-W3>"
 )
 
-project(credentialsTool VERSION 0.1)
+project(projectTemplate VERSION 0.1)
 
 option(USE_MYMATH "use custom math library" ON)
 
 set(
     TARGET_NAME
-    credentialsTool
+    projectTemplate
 )
 configure_file(include/configure_template.h configure.h)
 set(
@@ -91,4 +91,5 @@ set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
 set(CPACK_PACKAGE_VERSION_MAJOR "${${PROJECT_NAME}_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${${PROJECT_NAME}_VERSION_MINOR}")
 set(CPACK_SOURCE_GENERATOR "TGZ")
+set(CPACK_PACKAGE_DIRECTORY package)
 include(CPack)
