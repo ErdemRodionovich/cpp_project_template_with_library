@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
+#compiler flags
 add_library(compiler_flags INTERFACE)
 target_compile_features(compiler_flags INTERFACE cxx_std_20)
 set(gcc_like_cxx "$<COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang,GNU,LCC>")
@@ -42,9 +43,38 @@ target_include_directories(${TARGET_NAME} PRIVATE
                                           ${CMAKE_CURRENT_BINARY_DIR}
 )
 
+#install
 list(APPEND INSTALLABLE_TARGETS ${TARGET_NAME})
 install(TARGETS ${INSTALLABLE_TARGETS} DESTINATION bin)
 install(FILES ${HEADERS} DESTINATION include)
+install(EXPORT MathFunctionsTargets
+               FILE MathFunctionsTargets.cmake
+               DESTINATION lib/cmake/MathFunctions
+)
+
+#for config file find_package in other projects
+include(CMakePackageConfigHelpers)
+# generate the config file that is includes the exports
+configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
+  "${CMAKE_CURRENT_BINARY_DIR}/MathFunctionsConfig.cmake"
+  INSTALL_DESTINATION "lib/cmake/example"
+  NO_SET_AND_CHECK_MACRO
+  NO_CHECK_REQUIRED_COMPONENTS_MACRO
+)
+write_basic_package_version_file(
+  "${CMAKE_CURRENT_BINARY_DIR}/MathFunctionsConfigVersion.cmake"
+  VERSION "${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}"
+  COMPATIBILITY SameMajorVersion
+)
+install(FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/MathFunctionsConfig.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/MathFunctionsConfigVersion.cmake
+  DESTINATION lib/cmake/MathFunctions
+)
+#we want our project to also be used from a build directory
+export(EXPORT MathFunctionsTargets
+  FILE "${CMAKE_CURRENT_BINARY_DIR}/MathFunctionsTargets.cmake"
+)
 
 add_subdirectory(test)
 

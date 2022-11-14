@@ -40,9 +40,10 @@ target_link_libraries(${TARGET_NAME} compiler_flags)
 
 target_include_directories(${TARGET_NAME}
 	INTERFACE
-		include
+                $<INSTALL_INTERFACE:include>
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         PRIVATE
-               ${CMAKE_CURRENT_BINARY_DIR}
+                ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 #check system
@@ -71,7 +72,10 @@ if(HAVE_LOG AND HAVE_EXP)
 endif()
 
 #install
-set(INSTALLABLE_LIBS MathFunctions)
-install(TARGETS ${INSTALLABLE_LIBS} DESTINATION lib)
+list(APPEND INSTALLABLE_LIBS MathFunctions compiler_flags)
+install(TARGETS ${INSTALLABLE_LIBS}
+                EXPORT MathFunctionsTargets
+                DESTINATION lib
+)
 install(FILES ${HEADERS} DESTINATION include)
 
